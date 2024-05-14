@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  angular_app:
+    container_name: angular_app
+    image: pee-angular_app:1.0.0
+    build: ./frontend/
+    ports:
+      - 4200:4200
+    depends_on:
+      - spring_app
+  spring_app:
+    container_name: spring_app
+    image: pee-spring_app:1.0.0
+    build: ./backend/
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_URL=jdbc:mysql://bio_db:3306/biodb
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=nacho
+    depends_on:
+      - bio_db
+  bio_db:
+    container_name: bio_db
+    image: mysql:8.0.33
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: nacho
+      MYSQL_PASSWORD: nacho
+      MYSQL_DATABASE: biodb
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10

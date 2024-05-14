@@ -1,0 +1,5 @@
+frontend/node_modules/
+frontend/.angular/
+frontend/.angular/cache/
+frontend/.idea/
+frontend/.vscode/
