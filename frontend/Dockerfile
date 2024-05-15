@@ -1,13 +1,10 @@
 FROM node:20-alpine as build
-WORKDIR /frontend
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
 COPY . .
-RUN npm install --legacy-peer-deps
 RUN npm run build
-
-FROM nginx:alpine
-COPY --from=build /frontend/dist/biombillas/ /var/www/html
-COPY --from=build /frontend/dist/biombillas/ /usr/share/nginx/html
-EXPOSE 80
+CMD ["npm", "start"]
 
 #FROM node:19-alpine3.15 as builder
 #WORKDIR /app
