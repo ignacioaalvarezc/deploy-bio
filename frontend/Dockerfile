@@ -5,7 +5,8 @@ RUN npm install --legacy-peer-deps
 RUN npm run build
 
 FROM nginx:alpine
-COPY --from=build /app/dist/biombillas/ /var/www/html
+COPY --from=build /frontend/dist/biombillas/ /var/www/html
+COPY --from=build /frontend/dist/biombillas/ /usr/share/nginx/html
 EXPOSE 80
 
 #FROM node:19-alpine3.15 as builder
