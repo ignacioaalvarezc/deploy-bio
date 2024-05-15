@@ -1,5 +1,5 @@
 FROM node:20-alpine as build
-WORKDIR /app
+WORKDIR /frontend
 COPY . .
 RUN npm install --legacy-peer-deps
 RUN npm run build
